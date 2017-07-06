@@ -53,9 +53,10 @@ class Calculator:
         buttons: 按键字典
         """
         for row, col, rowspan, colspan in buttons:
+            btn = buttons[(row, col, rowspan, colspan)]
             tkinter.Button(parent,
-                           text=buttons[(row, col, rowspan, colspan)],
-                           command=None).grid(row=row,
+                           text=btn,
+                           command=click()).grid(row=row,
                                               column=col,
                                               rowspan=rowspan,
                                               columnspan=colspan)

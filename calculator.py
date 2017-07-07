@@ -34,10 +34,12 @@ class Calculator:
             (5, 4, 2, 1): '=',
             }
     def __init__(self, parent):
+        self.mainWindow = parent
+
         parent.title("计算器")
         parent.resizable(width=tkinter.NO, height=tkinter.NO)
-        parent.config(bd=2, padx=5, pady=5)
-        self.showFrame = tkinter.Frame(master=parent, bd=1)
+       #parent.config(bd=2, padx=5, pady=5)
+        self.showFrame = tkinter.Frame(master=parent)
        #self.showFrame.pack(expand=tkinter.YES, fill=tkinter.BOTH)
         self.showFrame.grid(row=0, column=0, columnspan=6)
         self.showLab = tkinter.Label(master=self.showFrame)
@@ -56,10 +58,14 @@ class Calculator:
             btn = buttons[(row, col, rowspan, colspan)]
             tkinter.Button(parent,
                            text=btn,
-                           command=click()).grid(row=row,
+                           command=(lambda b = btn: print(b))).grid(row=row,
                                               column=col,
                                               rowspan=rowspan,
                                               columnspan=colspan)
+
+    def click(self):
+        a = self.mainWindow.winfo_toplevel()
+        print(a)
 
 def start():
     Calculator(tkinter.Tk())

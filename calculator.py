@@ -54,19 +54,18 @@ class Calculator:
         parent: 父窗口
         buttons: 按键字典
         """
+        def click():
+            if btn == '除':
+                
+
         for row, col, rowspan, colspan in buttons:
             btn = buttons[(row, col, rowspan, colspan)]
             tkinter.Button(parent,
                            text=btn,
-                           command=(lambda b = btn: print(b))).grid(row=row,
-                                              column=col,
-                                              rowspan=rowspan,
-                                              columnspan=colspan)
-
-    def click(self):
-        a = self.mainWindow.winfo_toplevel()
-        print(a)
-
+                           command=click).grid(row=row,
+                                          column=col,
+                                          rowspan=rowspan,
+                                          columnspan=colspan)
 def start():
     Calculator(tkinter.Tk())
     tkinter.mainloop()

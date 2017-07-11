@@ -42,7 +42,7 @@ class Calculator:
         self.showFrame = tkinter.Frame(master=parent)
        #self.showFrame.pack(expand=tkinter.YES, fill=tkinter.BOTH)
         self.showFrame.grid(row=0, column=0, columnspan=6)
-        self.showLab = tkinter.Label(master=self.showFrame)
+        self.showLab = tkinter.Label(master=self.showFrame, textvariable='')
         self.showLab.pack(expand=tkinter.YES, fill=tkinter.BOTH)
         self.showEntry = tkinter.Entry(master=self.showFrame)
         self.showEntry.pack(expand=tkinter.YES, fill=tkinter.BOTH)
@@ -54,18 +54,30 @@ class Calculator:
         parent: 父窗口
         buttons: 按键字典
         """
-        def click():
-            if btn == '除':
-                
+        def compute(expression):
+            if expression:
 
         for row, col, rowspan, colspan in buttons:
             btn = buttons[(row, col, rowspan, colspan)]
-            tkinter.Button(parent,
-                           text=btn,
-                           command=click).grid(row=row,
-                                          column=col,
-                                          rowspan=rowspan,
-                                          columnspan=colspan)
+            if btn == '=':
+                tkinter.Button(parent, text=btn, command=(
+                    lambda t=btn:
+                        self.showLab.config(
+                            text=compute(self.showLab.cget('text'))))).grid(
+                                    row=row,
+                                    column=col,
+                                    rowspan=rowspan,
+                                    columnspan=colspan)
+            else:
+                tkinter.Button(parent, text=btn, command=(
+                    lambda t=btn:
+                        self.showLab.config(
+                            text=self.showLab.cget('text')+t))).grid(
+                                    row=row,
+                                    column=col,
+                                    rowspan=rowspan,
+                                    columnspan=colspan)
+
 def start():
     Calculator(tkinter.Tk())
     tkinter.mainloop()

@@ -9,7 +9,7 @@ class Calculator:
 
     # buttons的键的含义(行，列，跨行数，跨列数)
     buttons = {
-            (2, 0, 1, 1): '7',
+            (2, 0, 1, 1): '7', 
             (2, 1, 1, 1): '8',
             (2, 2, 1, 1): '9',
             (2, 3, 1, 1): '除',
@@ -39,14 +39,19 @@ class Calculator:
         parent.title("计算器")
         parent.resizable(width=tkinter.NO, height=tkinter.NO)
        #parent.config(bd=2, padx=5, pady=5)
-        self.showFrame = tkinter.Frame(master=parent)
+        self.showFrame = tkinter.Frame(parent)
        #self.showFrame.pack(expand=tkinter.YES, fill=tkinter.BOTH)
         self.showFrame.grid(row=0, column=0, columnspan=6)
-        self.showLab = tkinter.Label(master=self.showFrame, textvariable='')
+        self.showLab = tkinter.Label(self.showFrame)
         self.showLab.pack(expand=tkinter.YES, fill=tkinter.BOTH)
-        self.showEntry = tkinter.Entry(master=self.showFrame)
+        self.showEntry = tkinter.Entry(self.showFrame, justify=tkinter.RIGHT)
         self.showEntry.pack(expand=tkinter.YES, fill=tkinter.BOTH)
         self.__addButton(parent, self.buttons)
+        
+    def __compute(expression):
+        if expression:
+            
+        return ''
 
     def __addButton(self, parent, buttons):
         """
@@ -54,29 +59,26 @@ class Calculator:
         parent: 父窗口
         buttons: 按键字典
         """
-        def compute(expression):
-            if expression:
+        def equalClick():
+            result = Calculator.__compute(self.showEntry.get())
+            self.showLab.config(text=self.showEntry.get() + ' = ' + result)
+            self.showEntry.delete(0, tkinter.END)
+            self.showEntry.insert(tkinter.END, result)
 
         for row, col, rowspan, colspan in buttons:
-            btn = buttons[(row, col, rowspan, colspan)]
-            if btn == '=':
-                tkinter.Button(parent, text=btn, command=(
-                    lambda t=btn:
-                        self.showLab.config(
-                            text=compute(self.showLab.cget('text'))))).grid(
-                                    row=row,
-                                    column=col,
-                                    rowspan=rowspan,
-                                    columnspan=colspan)
-            else:
-                tkinter.Button(parent, text=btn, command=(
-                    lambda t=btn:
-                        self.showLab.config(
-                            text=self.showLab.cget('text')+t))).grid(
-                                    row=row,
-                                    column=col,
-                                    rowspan=rowspan,
-                                    columnspan=colspan)
+            bt = buttons[(row, col, rowspan, colspan)] # button text
+
+            def click(bt=bt):
+                if bt == '=':
+                    equalClick()
+                else:
+                    self.showEntry.insert(tkinter.END, bt)
+
+            tkinter.Button(parent, text=bt, command=click).grid(
+                    row=row,
+                    column=col,
+                    rowspan=rowspan,
+                    columnspan=colspan)
 
 def start():
     Calculator(tkinter.Tk())

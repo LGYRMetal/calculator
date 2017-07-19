@@ -12,7 +12,7 @@ class Calculator:
             (2, 0, 1, 1): '7', 
             (2, 1, 1, 1): '8',
             (2, 2, 1, 1): '9',
-            (2, 3, 1, 1): '除',
+            (2, 3, 1, 1): '/',
             (2, 4, 1, 1): '返回',
             (2, 5, 1, 1): '退格',
             (3, 0, 1, 1): '4',
@@ -33,6 +33,7 @@ class Calculator:
             (5, 3, 1, 1): '+',
             (5, 4, 2, 1): '=',
             }
+
     def __init__(self, parent):
         self.mainWindow = parent
 
@@ -47,10 +48,26 @@ class Calculator:
         self.showEntry = tkinter.Entry(self.showFrame, justify=tkinter.RIGHT)
         self.showEntry.pack(expand=tkinter.YES, fill=tkinter.BOTH)
         self.__addButton(parent, self.buttons)
+
+    def __prior(operator1, operator2):
+        operators = {
+                '+': 0
+                '-': 0
+                'x': 1
+                '/': 1
+                '(': 9
+                }
+        return operators[operator1] > operators[operator2]
         
     def __compute(expression):
         if expression:
-            
+            operand = []
+            operator = []
+
+            for c in expression:
+                if c.isdigit():
+                    operand.addend(c)
+
         return ''
 
     def __addButton(self, parent, buttons):
